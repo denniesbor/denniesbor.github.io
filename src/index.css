@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Computer Modern";
+  src: url("./assets/fonts/cmunss-webfont.woff2") format("woff2"),
+    url("/assets/fonts/cmunss-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+:root {
+  font-family: "Computer Modern", serif;
+}
+
+body {
+  margin: 16px; /* or any value you prefer */
+  background-color: #f8f9fa; /* background color for margins */
+}
+
+.bg-page-background {
+  background-color: #f8f9fa; /* Or use a background image if needed */
+}
