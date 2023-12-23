@@ -25,7 +25,7 @@
   },
   {
     "title": "Socio-economic impact of electricity grid infrastructure failure due to severe space weather events",
-    "description": "In this study, we estimate GDP shock in the US due to power grid downtime from adverse space weather. Probabilistic estimates of direct impact on various scenarios are obtained using Monte Carlo simulation on scenarios where certain regions are out of power. Finally, Leontieff and Ghosh's input-output economic models are applied to determine the supply and demand impacts.",
+    "description": "In this study, we estimate GDP shock in the US from power grid downtime due to adverse space weather. Probabilistic Monte Carlo simulation models are applied to estimate the direct impact on various scenarios. Finally, Leontieff and Ghosh's input-output economic models are used to estimate the supply and demand side implications.",
     "status": "Active",
     "statusColor": "green",
     "githubLink": "https://github.com/denniesbor/space_weather_v1",

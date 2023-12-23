@@ -69,13 +69,15 @@ const ResearchHighlight = ({
 
 const ResearchHighlights = () => {
   return (
-    <div className="py-8">
-      <h2 className="text-xl mb-4">Research Highlights</h2>
+    <div className="w-full">
+      {" "}
+      {/* Ensure full width of the parent */}
+      <h2 className="text-xl mb-4 text-center">Research Highlights</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
         {papers.map((research, index) => (
           <div
             key={index}
-            className={`flex ${
+            className={`flex flex-1 ${
               index % papers.length !== papers.length - 1
                 ? "border-r border-gray-300"
                 : ""
