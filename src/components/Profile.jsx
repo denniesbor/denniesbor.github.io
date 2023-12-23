@@ -39,7 +39,8 @@ const Profile = () => {
           href="https://twitter.com/bordennies"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-black-500"
+          className="text-black-500 social-link"
+          title="Twitter"
         >
           <i className="fa-brands fa-x-twitter"></i>
         </a>
@@ -47,7 +48,8 @@ const Profile = () => {
           href="https://ke.linkedin.com/in/denniesbor"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-700"
+          className="text-blue-700 social-link"
+          title="LinkedIn"
         >
           <i className="fab fa-linkedin"></i>
         </a>
@@ -55,9 +57,19 @@ const Profile = () => {
           href="https://github.com/denniesbor"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-black"
+          className="text-black social-link"
+          title="GitHub"
         >
           <i className="fab fa-github"></i>
+        </a>
+        <a
+          href="https://scholar.google.com/citations?hl=en&user=mnet84cAAAAJ"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-black social-link"
+          title="Google Scholar"
+        >
+          <i className="fas fa-graduation-cap"></i>
         </a>
       </div>
     </div>
