@@ -1,33 +1,7 @@
 import React from "react";
 import BlogArticle from "../components/BlogArticle";
 
-const syntheticData = [
-  {
-    title: "Understanding the Cosmos",
-    summary: "An in-depth look at the mysteries of the universe.",
-    link: "/blog/cosmos",
-  },
-  {
-    title: "Advances in Quantum Computing",
-    summary: "Exploring the future of computing.",
-    link: "/blog/quantum",
-  },
-  {
-    title: "The Secrets of Dark Matter",
-    summary: "A journey into the unknown components of the cosmos.",
-    link: "/blog/dark-matter",
-  },
-  {
-    title: "Artificial Intelligence in Space Exploration",
-    summary: "How AI is changing the way we explore space.",
-    link: "/blog/ai-space",
-  },
-  {
-    title: "The Future of Renewable Energy",
-    summary: "Innovations that are shaping the future of energy.",
-    link: "/blog/renewable-energy",
-  },
-];
+const syntheticData = [];
 
 const Thoughts = () => {
   return (
