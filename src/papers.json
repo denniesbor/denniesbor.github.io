@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Geographically Weighted Socio-economic Determinants of Political Association",
+    "description": "The study examines the influence of personal and demographic behaviors on political alignment. The socio-economic and demographic factors are geographically weighted to test for spatial autocorrelation of political ideologies. We conclude that certain factors influence how an individual associates politically, and the distribution of political ideologies is not spatially random.",
+    "status": "Revision",
+    "statusColor": "blue",
+    "githubLink": "https://github.com/denniesbor/socio_econ_partisanship",
+    "paperLink": "NA"
+  },
+  {
+    "title": "Stochastic Evaluation of Broadband Speeds Supplied in the Contiguous US",
+    "description": "The research analyzed the broadband speed supplied by internet service providers within the contiguous US for the past four years. Using Moran's I, the broadband supplied is tested for spatial autocorrelation and checked for the existence of localized clusters. Further, a time series analysis of the localized clusters was performed using discrete Markov decision processes. The findings indicate that broadband speeds are spatially auto-correlated, and positive clusters ( low and high) remain the same.",
+    "status": "Revision",
+    "statusColor": "blue",
+    "githubLink": "https://github.com/denniesbor/us_broadband",
+    "paperLink": "NA"
+  },
+  {
+    "title": "Quantifying Polarization using lexical-based sentiment analysis methods",
+    "description": "The tweets (posts in X) from the 116th and 117th Congress are analyzed using natural language processing tools. The tweets were classified into different key policies of interest, such as LGBTQ, climate change, immigration, the Ukraine-Russia war, etc. The study concludes that some of the polarizing discourses tend to be domestic. At the same time, the least polarization is noted on geopolitical policies, such as the Ukraine-Russia war, China and Taiwan, etc.",
+    "status": "Archived",
+    "statusColor": "gray",
+    "githubLink": "https://github.com/denniesbor/twitter_political_polarization",
+    "paperLink": "https://arxiv.org/abs/2302.07775"
+  },
+  {
+    "title": "Socio-economic impact of electricity grid infrastructure failure due to severe space weather events",
+    "description": "In this study, we estimate GDP shock in the US due to power grid downtime from adverse space weather. Probabilistic estimates of direct impact on various scenarios are obtained using Monte Carlo simulation on scenarios where certain regions are out of power. Finally, Leontieff and Ghosh's input-output economic models are applied to determine the supply and demand impacts.",
+    "status": "Active",
+    "statusColor": "green",
+    "githubLink": "https://github.com/denniesbor/space_weather_v1",
+    "paperLink": "NA"
+  }
+]

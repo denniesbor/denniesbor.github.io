@@ -2,7 +2,6 @@ import React from "react";
 
 import Navigation from "./components/Navigation";
 import Profile from "./components/Profile";
-import Biography from "./components/Biography";
 import ResearchHighlights from "./components/ResearchHighlights";
 import HorizontalBar from "./components/HorizontalBar";
 import Footer from "./components/Footer";
@@ -14,7 +13,6 @@ function Home() {
         <Navigation />
         <Profile />
         <HorizontalBar />
-        <Biography />
         <HorizontalBar />
         <ResearchHighlights />
         <HorizontalBar />
