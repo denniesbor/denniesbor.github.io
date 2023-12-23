@@ -30,7 +30,7 @@ const ResearchHighlight = ({
   return (
     <div className="flex flex-col space-y-2 p-4">
       <h3 className="text-lg font-bold capitalize">{title}</h3>
-      <p>
+      <p className="text-justify">
         {isExpanded ? description : `${description.substring(0, 100)}... `}
         <button onClick={toggleDescription} className="text-blue-600 ml-2">
           {isExpanded ? "Less" : "More"}

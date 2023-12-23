@@ -10,7 +10,7 @@ const Profile = () => {
         alt="Profile"
         className="rounded-full w-32 h-32 md:w-24 md:h-24"
       />
-      <p className="font-computer-modern">
+      <p className="font-computer-modern text-justify">
         I am a Ph.D. student at George Mason University, Fairfax, Virginia,
         majoring in Earth Systems and Geoinformation Sciences. My studies
         centers on Geospatial Programming and Algorithms, Spatial Statistics,
