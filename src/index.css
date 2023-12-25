@@ -38,3 +38,11 @@ body {
   color: grey; /* Text color on hover */
   white-space: nowrap;
 }
+
+.icon-red {
+  color: #C0392B; /* Christmas red */
+}
+
+.icon-green {
+  color: #27AE60; /* Christmas green */
+}
