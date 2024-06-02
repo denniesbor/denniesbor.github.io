@@ -6,6 +6,9 @@ export default {
       fontFamily: {
         "computer-modern": ["Computer Modern", "serif"],
       },
+      maxWidth: {
+        "8xl": "160rem", // default 7xl
+      },
     },
   },
   plugins: [],

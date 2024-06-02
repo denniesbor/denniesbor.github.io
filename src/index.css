@@ -40,9 +40,42 @@ body {
 }
 
 .icon-red {
-  color: #C0392B; /* Christmas red */
+  color: #c0392b; /* Christmas red */
 }
 
 .icon-green {
-  color: #27AE60; /* Christmas green */
+  color: #27ae60; /* Christmas green */
 }
+
+/* Custom width classes for different breakpoints */
+@media (max-width: 575px) {
+  .custom-width {
+    width: 100%; /* Full width for screens less than 576px */
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .custom-width {
+    width: 100%; /* 50% width for screens between 576px and 767px */
+  }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  .custom-width {
+    width: 35%; /* 35% width for screens between 768px and 991px */
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1199px) {
+  .custom-width {
+    width: 33%; /* 33% width for screens between 992px and 1199px */
+  }
+}
+
+@media (min-width: 1200px) {
+  .custom-width {
+    width: 25%; /* 25% width for screens greater than 1200px */
+  }
+}
+
+

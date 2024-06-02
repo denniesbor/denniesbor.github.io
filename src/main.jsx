@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./Home.jsx";
-
+import ReadBlog from "./components/ReadBlog";
 import Blog from "./Blog.jsx";
 import ErrorPage from "./components/error-page.jsx";
 
@@ -17,6 +17,11 @@ const router = createBrowserRouter([
   {
     path: "/thoughts",
     element: <Blog />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/blog/:id",
+    element: <ReadBlog />,
     errorElement: <ErrorPage />,
   },
 ]);
