@@ -39,7 +39,7 @@ const Navigation = ({ toggleSidebar }) => {
           <i className="fas fa-lightbulb mr-2"></i> {/* Thoughts icon */}
           Thoughts
         </Link>
-        {location.pathname !== "/thoughts" && (
+        {location.pathname === "/" && (
           <button
             className="block py-2 w-full text-left"
             onClick={() => {

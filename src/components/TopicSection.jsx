@@ -1,39 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
+import { BlogContext } from "../context/BlogContext";
 import BlogPost from "./BlogPost";
+import Loading from "./Loading";
 
-const TopicSection = ({ topics }) => {
-  // Sample data for blog posts
-  const blogPosts = [
-    {
-      id: 1,
-      title: "Post Title 1",
-      description: "This is a truncated description for Post Title 1.",
-      author: "Author 1",
-      tags: ["Tag1", "Tag2"],
-      date: "2023-06-01",
-      topic: "Topic1",
-    },
-    {
-      id: 2,
-      title: "Post Title 2",
-      description: "This is a truncated description for Post Title 2.",
-      author: "Author 2",
-      tags: ["Tag3", "Tag4"],
-      date: "2023-05-15",
-      topic: "Topic2",
-    },
-    // Add more blog posts as needed
-  ];
+const TopicSection = ({ topicIds }) => {
+  const { blogPosts, tags, loading } = useContext(BlogContext);
 
-  const filteredPosts = blogPosts.filter((post) => topics.includes(post.topic));
+  if (loading) {
+    return <Loading />;
+  }
+
+  const filteredPosts = blogPosts.filter(
+    (post) => topicIds && topicIds.includes(post.topic)
+  );
 
   return (
     <div className="mb-8">
       <h2 className="text-2xl font-bold mb-4 text-center">Articles</h2>
       <div className="space-y-4">
-        {filteredPosts.map((post, index) => (
-          <BlogPost key={index} post={post} />
-        ))}
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((post, index) => (
+            <BlogPost key={index} post={post} tags={tags} />
+          ))
+        ) : (
+          <p>No articles available for the selected topics.</p>
+        )}
       </div>
     </div>
   );

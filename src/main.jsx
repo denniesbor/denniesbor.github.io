@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BlogProvider } from "./context/BlogContext";
 import Home from "./Home.jsx";
 import ReadBlog from "./components/ReadBlog";
 import Blog from "./Blog.jsx";
@@ -20,7 +21,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: "/blog/:id",
+    path: "/:topic/:slug",
     element: <ReadBlog />,
     errorElement: <ErrorPage />,
   },
@@ -29,6 +30,8 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <BlogProvider>
+      <RouterProvider router={router} />
+    </BlogProvider>
   </React.StrictMode>
 );

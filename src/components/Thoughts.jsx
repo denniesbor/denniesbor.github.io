@@ -1,5 +1,5 @@
 import React from "react";
-import BlogArticle from "../components/BlogArticle";
+import BlogArticle from "./BlogArticle";
 
 const syntheticData = []; // Your synthetic data array
 

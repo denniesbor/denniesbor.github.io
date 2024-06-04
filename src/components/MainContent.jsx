@@ -1,37 +1,35 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import { BlogContext } from "../context/BlogContext";
 import TopicSection from "./TopicSection";
+import Loading from "./Loading";
 
 const MainContent = () => {
-  const initialTopics = ["Topic1", "Topic2", "Topic3", "Topic4", "Topic5"];
-  const [selectedTopics, setSelectedTopics] = useState(initialTopics);
+  const { topics, selectedTopicIds, toggleTopic, loading } =
+    useContext(BlogContext);
 
-  const toggleTopic = (topic) => {
-    setSelectedTopics((prevTopics) =>
-      prevTopics.includes(topic)
-        ? prevTopics.filter((t) => t !== topic)
-        : [...prevTopics, topic]
-    );
-  };
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="flex-1 p-4">
       <div className="w-full">
         <div className="flex justify-center space-x-4 mb-8">
-          {initialTopics.map((topic, index) => (
+          {topics.map((topic) => (
             <div
-              key={index}
+              key={topic.id}
               className={`inline-block px-2 py-1 rounded-full text-sm cursor-pointer ${
-                selectedTopics.includes(topic)
+                selectedTopicIds.includes(topic.id)
                   ? "bg-blue-500 text-white"
                   : "bg-blue-100 text-blue-500"
               }`}
-              onClick={() => toggleTopic(topic)}
+              onClick={() => toggleTopic(topic.id)}
             >
-              {topic}
+              {topic.name}
             </div>
           ))}
         </div>
-        <TopicSection topics={selectedTopics} />
+        <TopicSection topicIds={selectedTopicIds} />
       </div>
     </div>
   );

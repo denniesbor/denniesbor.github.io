@@ -1,5 +1,5 @@
 import React from "react";
-import Thoughts from "./pages/Thoughts";
+import Thoughts from "./components/Thoughts";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
