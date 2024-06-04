@@ -24,7 +24,7 @@ const BlogPost = ({ post, tags }) => {
         <span className="mr-2">|</span>
         <span className="mr-2">Views: {post.view_count}</span>
         <span className="mr-2">|</span>
-        <span className="mr-2">Likes: {post.likes}</span>
+        <span className="mr-2">Likes: {post.like_count}</span>
         <span className="mr-2">|</span>
         <span className="mr-2">Comments: {post.num_comments}</span>
       </div>
