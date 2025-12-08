@@ -8,6 +8,13 @@ on:
       - '**.md'
       - '.gitignore'
 
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+
 jobs:
   deploy-pages:
     runs-on: ubuntu-latest
@@ -36,7 +43,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./denniesbor.com/dist
-          # CNAME REMOVED: prevents conflict with your AWS DNS
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
