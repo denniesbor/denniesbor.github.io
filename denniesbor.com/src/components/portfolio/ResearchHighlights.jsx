@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import papers from "../../data/papers.json";
+import papers from "../../api/papers";
 
 const ResearchHighlight = ({
   title,
