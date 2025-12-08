@@ -54,9 +54,9 @@ jobs:
     runs-on: self-hosted
     
     env:
-      BACKEND_PATH: /home/ubuntu/portfolio/backend
       NGINX_ROOT: /var/www/dist
       GO_BINARY_NAME: main
+      DEPLOY_DIR: /home/ubuntu/portfolio
 
     steps:
       - name: Checkout Code
@@ -79,10 +79,17 @@ jobs:
           sudo chmod -R 755 $NGINX_ROOT
           rm -rf ./temp_frontend_build
 
+      - name: Sync Backend Code
+        run: |
+          echo "📦 Syncing backend code..."
+          sudo mkdir -p $DEPLOY_DIR/backend
+          sudo rsync -av --delete ./backend/ $DEPLOY_DIR/backend/
+          sudo chown -R ubuntu:ubuntu $DEPLOY_DIR
+
       - name: Build & Restart Backend
         run: |
           echo "🛠️ Building Go Backend..."
-          cd $BACKEND_PATH
+          cd $DEPLOY_DIR/backend
           /usr/local/go/bin/go build -o $GO_BINARY_NAME main.go
           
           echo "🔄 Restarting Service..."
