@@ -8,12 +8,10 @@ on:
       - '**.md'
       - '.gitignore'
 
-
 permissions:
   contents: write
   pages: write
   id-token: write
-
 
 jobs:
   deploy-pages:
@@ -42,7 +40,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./denniesbor.com/dist  # Built files location
+          publish_dir: ./denniesbor.com/dist
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
@@ -56,7 +54,7 @@ jobs:
     runs-on: self-hosted
     
     env:
-      BACKEND_PATH: ./backend
+      BACKEND_PATH: /home/ubuntu/portfolio/backend
       NGINX_ROOT: /var/www/dist
       GO_BINARY_NAME: main
 
@@ -94,6 +92,7 @@ jobs:
             echo "✅ Backend is running!"
           else
             echo "❌ Backend failed to start!"
+            sudo journalctl -u go-backend -n 20 --no-pager
             exit 1
           fi
 
