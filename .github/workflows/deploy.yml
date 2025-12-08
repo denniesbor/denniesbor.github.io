@@ -1,0 +1,95 @@
+name: Deploy Pages then AWS
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.gitignore'
+
+jobs:
+  deploy-pages:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./denniesbor.com
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: denniesbor.com/package-lock.json
+
+      - name: Build React
+        run: |
+          npm ci
+          npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./denniesbor.com/dist
+          # CNAME REMOVED: prevents conflict with your AWS DNS
+
+      - name: Upload Build Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: ./denniesbor.com/dist/
+          retention-days: 1
+
+  deploy-aws:
+    needs: deploy-pages
+    runs-on: self-hosted
+    
+    env:
+      BACKEND_PATH: ./backend
+      NGINX_ROOT: /var/www/dist
+      GO_BINARY_NAME: main
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          clean: false
+
+      - name: Download React Build
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
+          path: ./temp_frontend_build
+
+      - name: Deploy Frontend to Nginx
+        run: |
+          echo "🚀 Moving Frontend files..."
+          sudo mkdir -p $NGINX_ROOT
+          sudo rsync -av --delete ./temp_frontend_build/ $NGINX_ROOT/
+          sudo chown -R www-data:www-data $NGINX_ROOT
+          sudo chmod -R 755 $NGINX_ROOT
+          rm -rf ./temp_frontend_build
+
+      - name: Build & Restart Backend
+        run: |
+          echo "🛠️ Building Go Backend..."
+          cd $BACKEND_PATH
+          /usr/local/go/bin/go build -o $GO_BINARY_NAME main.go
+          
+          echo "🔄 Restarting Service..."
+          sudo systemctl restart go-backend
+          
+          if systemctl is-active --quiet go-backend; then
+            echo "✅ Backend is running!"
+          else
+            echo "❌ Backend failed to start!"
+            exit 1
+          fi
+
+      - name: Reload Nginx
+        run: sudo systemctl reload nginx
