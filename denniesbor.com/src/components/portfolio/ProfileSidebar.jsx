@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
 import avatar from "../../assets/avatar.jpg";
-import ResearchHighlights from "../portfolio/ResearchHighlights";
-import HorizontalBar from "../common/HorizontalBar";
 import { Link } from "react-router-dom";
 
 const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
@@ -15,97 +13,120 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div
-      className={`fixed top-0 left-0 h-full bg-gray-100 p-8 transform ${
+      className={`fixed top-0 left-0 h-full transform ${
         isOpen ? "translate-x-0" : "-translate-x-full"
-      } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 custom-width md:h-auto overflow-y-auto`}
+      } transition-transform duration-300 ease-in-out md:relative md:translate-x-0 custom-width md:h-auto z-50 md:z-0`}
     >
-      <button
-        className="md:hidden absolute top-4 right-4 text-2xl font-bold"
-        onClick={toggleSidebar}
-      >
-        <i className="fas fa-times"></i>
-      </button>
-      <div className="md:sticky top-0">
-        <img
-          src={avatar}
-          alt="Profile"
-          className="rounded-full w-32 h-32 md:w-24 md:h-24 mx-auto mb-4"
+      {/* Mobile overlay */}
+      {isOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-black/50 -z-10"
+          onClick={toggleSidebar}
         />
-        <HorizontalBar />
-        <p className="text-justify mt-4 leading-loose">
-          Computational scientist specializing in Earth systems modeling, geospatial analysis, 
-          and space weather impacts. Ph.D. candidate at George Mason University developing 
-          physics-based models to quantify socio-economic risks from infrastructure failures.
-          <br />
-          <br />
-          Research combines computational physics, signal processing, econometric modeling, 
-          and geospatial algorithms to solve complex problems in critical infrastructure 
-          resilience. Advised by{" "}
-          <a
-            href="https://www.linkedin.com/in/edwardoughton"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-600 hover:text-blue-800"
+      )}
+      
+      {/* Sidebar content */}
+      <div className="h-full md:py-8">
+        <div className="bg-white rounded-lg border border-gray-200 p-6 h-full md:h-auto md:sticky md:top-4 md:max-h-[calc(100vh-2rem)] overflow-y-auto">
+          
+          {/* Close button for mobile */}
+          <button
+            className="md:hidden absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl"
+            onClick={toggleSidebar}
           >
-            Dr. Edward Oughton
-          </a>.
-          <br />
-          <br />
-          Core expertise: Python scientific computing, spatial analysis (GIS/remote sensing), 
-          numerical methods, and high-performance computing. Experienced deploying scalable 
-          research infrastructure on cloud platforms (AWS, GCP) and building reproducible 
-          scientific workflows.
-        </p>
-        <div className="flex space-x-4 mt-4 mb-4 justify-center">
-          <a
-            href="https://twitter.com/bordennies"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-black-500 social-link"
-            title="Twitter"
-          >
-            <i className="fab fa-twitter"></i>
-          </a>
-          <a
-            href="https://ke.linkedin.com/in/denniesbor"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-700 social-link"
-            title="LinkedIn"
-          >
-            <i className="fab fa-linkedin"></i>
-          </a>
-          <a
-            href="https://github.com/denniesbor"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-black social-link"
-            title="GitHub"
-          >
-            <i className="fab fa-github"></i>
-          </a>
-          <a
-            href="https://scholar.google.com/citations?hl=en&user=mnet84cAAAAJ"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-black social-link"
-            title="Google Scholar"
-          >
-            <i className="fas fa-graduation-cap"></i>
-          </a>
-        </div>
-        <HorizontalBar />
-        <div className="mt-4 text-center">
+            <i className="fas fa-times"></i>
+          </button>
+
+          {/* Profile Image */}
+          <img
+            src={avatar}
+            alt="Profile"
+            className="rounded-full w-24 h-24 mx-auto mb-4 border-2 border-gray-200"
+          />
+
+          {/* Name/Title */}
+          <h3 className="text-center font-bold text-lg mb-4 text-gray-800">
+            Dennies Bor
+          </h3>
+
+          {/* Bio */}
+          <div className="text-sm text-gray-600 leading-relaxed space-y-3 mb-4">
+            <p>
+              Computational scientist specializing in Earth systems modeling, geospatial analysis, 
+              and space weather impacts. Ph.D. candidate at George Mason University developing 
+              physics-based models to quantify socio-economic risks from infrastructure failures.
+            </p>
+            <p>
+              Research combines computational physics, signal processing, econometric modeling, 
+              and geospatial algorithms. Advised by{" "}
+              <a
+                href="https://www.linkedin.com/in/edwardoughton"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:text-blue-800"
+              >
+                Dr. Edward Oughton
+              </a>.
+            </p>
+            <p>
+              Core expertise: Python scientific computing, spatial analysis (GIS/remote sensing), 
+              numerical methods, and high-performance computing.
+            </p>
+          </div>
+
+          {/* Social Links */}
+          <div className="flex justify-center space-x-4 mb-4 pb-4 border-b border-gray-200">
+            <a
+              href="https://twitter.com/bordennies"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-500 transition"
+              title="Twitter"
+            >
+              <i className="fab fa-twitter text-xl"></i>
+            </a>
+            
+            <a
+              href="https://ke.linkedin.com/in/denniesbor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-blue-700 transition"
+              title="LinkedIn"
+            >
+              <i className="fab fa-linkedin text-xl"></i>
+            </a>
+            
+            <a
+              href="https://github.com/denniesbor"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-gray-900 transition"
+              title="GitHub"
+            >
+              <i className="fab fa-github text-xl"></i>
+            </a>
+            
+            <a
+              href="https://scholar.google.com/citations?hl=en&user=mnet84cAAAAJ"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-600 hover:text-red-600 transition"
+              title="Google Scholar"
+            >
+              <i className="fas fa-graduation-cap text-xl"></i>
+            </a>
+          </div>
+
+          {/* Resume Button */}
           <Link
             to="/resume"
-            className="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+            className="block text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-semibold"
           >
             <i className="fas fa-file-pdf mr-2"></i>
             View Resume
           </Link>
+
         </div>
-        <HorizontalBar />
-        <ResearchHighlights />
       </div>
     </div>
   );
