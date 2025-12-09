@@ -15,67 +15,64 @@
 }
 
 body {
-  margin: 16px; /* or any value you prefer */
-  background-color: #f8f9fa; /* background color for margins */
+  margin: 4px;
+  background-color: #f8f9fa;
 }
 
 .bg-page-background {
-  background-color: #f8f9fa; /* Or use a background image if needed */
+  background-color: #f8f9fa;
 }
 
 .social-link {
   position: relative;
   display: inline-block;
-  color: #000; /* default color */
+  color: #000;
 }
 
 .social-link:hover::after {
   content: attr(title);
   position: absolute;
-  bottom: -20px; /* Adjust as needed */
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
-  color: grey; /* Text color on hover */
+  color: grey;
   white-space: nowrap;
 }
 
 .icon-red {
-  color: #c0392b; /* Christmas red */
+  color: #c0392b;
 }
 
 .icon-green {
-  color: #27ae60; /* Christmas green */
+  color: #27ae60;
 }
 
-/* Custom width classes for different breakpoints */
 @media (max-width: 575px) {
   .custom-width {
-    width: 100%; /* Full width for screens less than 576px */
+    width: 100%;
   }
 }
 
 @media (min-width: 576px) and (max-width: 767px) {
   .custom-width {
-    width: 100%; /* 50% width for screens between 576px and 767px */
+    width: 100%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
   .custom-width {
-    width: 35%; /* 35% width for screens between 768px and 991px */
+    width: 35%;
   }
 }
 
 @media (min-width: 992px) and (max-width: 1199px) {
   .custom-width {
-    width: 33%; /* 33% width for screens between 992px and 1199px */
+    width: 33%;
   }
 }
 
 @media (min-width: 1200px) {
   .custom-width {
-    width: 25%; /* 25% width for screens greater than 1200px */
+    width: 25%;
   }
 }
-
-
