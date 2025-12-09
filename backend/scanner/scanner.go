@@ -2,11 +2,29 @@ package scanner
 
 import (
 	"bufio"
+	"encoding/json"
 	"denniesbor.com/models"
 	"os"
 	"path/filepath"
 	"strings"
 )
+
+// Folders to ignore when scanning projects
+var ignoredFolders = map[string]bool{
+	"power-grid-data": true,
+	"data":            true,
+	".git":            true,
+	"node_modules":    true,
+}
+
+// ProjectMetadata represents the metadata.json file in project folders
+type ProjectMetadata struct {
+	Title           string   `json:"title"`
+	Description     string   `json:"description"`
+	PrimaryCategory string   `json:"primaryCategory"` 
+	Tags            []string `json:"tags"`
+	Featured        bool     `json:"featured"`
+}
 
 func ScanProjects(projectsDir string) ([]models.Project, error) {
 	var projects []models.Project
@@ -21,17 +39,34 @@ func ScanProjects(projectsDir string) ([]models.Project, error) {
 			continue
 		}
 
+		// Skip ignored folders
+		if ignoredFolders[entry.Name()] {
+			continue
+		}
+
 		projectPath := filepath.Join(projectsDir, entry.Name())
+		
+		// Try to read metadata.json
+		var metadata ProjectMetadata
+		metadataPath := filepath.Join(projectPath, "metadata.json")
+		if data, err := os.ReadFile(metadataPath); err == nil {
+			json.Unmarshal(data, &metadata)
+		}
+
 		assets, err := DetectAssets(projectPath)
 		if err != nil {
 			continue
 		}
 
 		project := models.Project{
-			ID:     entry.Name(),
-			Title:  formatTitle(entry.Name()),
-			Path:   entry.Name(),
-			Assets: assets,
+			ID:              entry.Name(),
+			Title:           getTitle(metadata.Title, entry.Name()),
+			Description:     metadata.Description,
+			PrimaryCategory: metadata.PrimaryCategory,
+			Tags:            metadata.Tags,
+			Featured:        metadata.Featured,
+			Path:            entry.Name(),
+			Assets:          assets,
 		}
 
 		projects = append(projects, project)
@@ -129,6 +164,10 @@ func parseThought(postFile, category, slug string) (models.Thought, error) {
 					thought.Date = value
 				case "summary":
 					thought.Summary = value
+				case "category":
+					thought.Category = value
+				case "tags":
+					thought.Tags = parseTagsArray(value)
 				}
 			}
 		}
@@ -139,6 +178,32 @@ func parseThought(postFile, category, slug string) (models.Thought, error) {
 	}
 
 	return thought, nil
+}
+
+func parseTagsArray(tagString string) []string {
+	// Handle formats like: ["tag1", "tag2", "tag3"]
+	tagString = strings.Trim(tagString, "[]")
+	if tagString == "" {
+		return []string{}
+	}
+
+	tags := strings.Split(tagString, ",")
+	var cleaned []string
+	for _, tag := range tags {
+		tag = strings.TrimSpace(tag)
+		tag = strings.Trim(tag, `"'`)
+		if tag != "" {
+			cleaned = append(cleaned, tag)
+		}
+	}
+	return cleaned
+}
+
+func getTitle(metaTitle, dirName string) string {
+	if metaTitle != "" {
+		return metaTitle
+	}
+	return formatTitle(dirName)
 }
 
 func formatTitle(id string) string {

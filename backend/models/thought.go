@@ -12,6 +12,7 @@ type Thought struct {
 	Category string   `json:"category"`
 	Date     string   `json:"date,omitempty"`
 	Summary  string   `json:"summary,omitempty"`
+	Tags     []string `json:"tags,omitempty"` // ← Add this
 	Path     string   `json:"path"`
 	Assets   []string `json:"assets,omitempty"`
 }
