@@ -13,7 +13,7 @@ const getAPIBase = () => {
   return 'http://localhost:8080/api';
 };
 
-const API_BASE = getAPIBase();
+export const API_BASE = getAPIBase();
 
 export const api = {
   // Projects

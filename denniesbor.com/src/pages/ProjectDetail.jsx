@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import Loading from "../components/common/Loading";
 import FilePreviewModal from "../components/FilePreviewModal";
-import { api } from "../api/portfolio";
+import { api, API_BASE } from "../api/portfolio";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -14,27 +14,24 @@ const ProjectDetail = () => {
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
   
-  // Modal State
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // Consider moving this to an environment variable in production
-  const BASE_URL = "http://localhost:8080/projects";
+  // 2. DEFINE DYNAMIC BASE URL
+  const PROJECT_ASSETS_URL = `${API_BASE}/projects`;
 
-  // 1. Fetch Project Data & Description
   useEffect(() => {
     let isMounted = true;
 
     const fetchData = async () => {
       try {
-        // Fetch Project Metadata
         const data = await api.getProject(id);
         
         if (isMounted) {
           setProject(data);
           
-          // Attempt to fetch description.md
           try {
-            const resp = await fetch(`${BASE_URL}/${data.path}/description.md`);
+            // 3. Use the dynamic URL
+            const resp = await fetch(`${PROJECT_ASSETS_URL}/${data.path}/description.md`);
             if (resp.ok) {
               const text = await resp.text();
               if (isMounted) setDescription(text);
@@ -53,13 +50,13 @@ const ProjectDetail = () => {
     fetchData();
 
     return () => { isMounted = false; };
-  }, [id]);
+  }, [id, PROJECT_ASSETS_URL]); // Added dependency
 
-  // 2. Memoize File List to prevent Modal re-renders
   const allFiles = useMemo(() => {
     if (!project) return [];
     const files = [];
-    const base = `${BASE_URL}/${project.path}`;
+    // 4. Use the dynamic URL
+    const base = `${PROJECT_ASSETS_URL}/${project.path}`;
 
     const addFiles = (list, type, icon) => {
         list?.forEach(f => files.push({ name: f, url: `${base}/${f}`, type, icon }));
@@ -70,17 +67,16 @@ const ProjectDetail = () => {
     addFiles(project.assets.pdfs, 'pdf', 'fa-file-pdf');
 
     return files;
-  }, [project]);
+  }, [project, PROJECT_ASSETS_URL]);
 
-  // --- Handlers ---
   const handleFileClick = (filename, type, icon) => {
-    const url = `${BASE_URL}/${project.path}/${filename}`;
+    // 5. Use the dynamic URL
+    const url = `${PROJECT_ASSETS_URL}/${project.path}/${filename}`;
     setSelectedFile({ name: filename, url, type, icon });
   };
 
   const handleBack = (e) => {
     e.preventDefault();
-    // React Router 'default' key implies direct entry (no history stack)
     if (location.key !== "default") {
       navigate(-1); 
     } else {
@@ -101,7 +97,6 @@ const ProjectDetail = () => {
     );
   }
 
-  // Helper to render file rows to keep JSX clean
   const FileRow = ({ filename, type, icon, colorClass, bgClass, iconClass, label }) => (
     <div 
       onClick={() => handleFileClick(filename, type, iconClass)}
@@ -122,8 +117,6 @@ const ProjectDetail = () => {
 
   return (
     <div className="mt-8 mb-20 max-w-5xl mx-auto px-4 sm:px-6">
-      
-      {/* NAVIGATION */}
       <div className="mb-6">
         <button 
           onClick={handleBack} 
@@ -133,7 +126,6 @@ const ProjectDetail = () => {
         </button>
       </div>
 
-      {/* HEADER & DESCRIPTION */}
       <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm mb-8 border border-gray-200">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 border-b border-gray-100 pb-4">
               {project.title}
@@ -148,7 +140,6 @@ const ProjectDetail = () => {
           </div>
       </div>
 
-      {/* FILE BROWSER */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-12 overflow-hidden">
           <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center">
               <i className="fas fa-folder-open text-yellow-600 mr-3 text-lg"></i>
@@ -156,8 +147,6 @@ const ProjectDetail = () => {
           </div>
 
           <div className="flex flex-col">
-              
-              {/* NOTEBOOKS */}
               {project.assets.notebooks?.map(nb => (
                 <FileRow 
                   key={nb} 
@@ -170,7 +159,6 @@ const ProjectDetail = () => {
                 />
               ))}
 
-              {/* PDFS */}
               {project.assets.pdfs?.map(pdf => (
                 <FileRow 
                   key={pdf} 
@@ -183,7 +171,6 @@ const ProjectDetail = () => {
                 />
               ))}
 
-              {/* IMAGES */}
               {project.assets.images?.map(img => (
                 <FileRow 
                   key={img} 
@@ -200,7 +187,8 @@ const ProjectDetail = () => {
               {project.assets.data?.map(d => (
                   <a 
                       key={d} 
-                      href={`${BASE_URL}/${project.path}/${d}`}
+                      // 6. Use the dynamic URL here too
+                      href={`${PROJECT_ASSETS_URL}/${project.path}/${d}`}
                       download
                       className="flex items-center justify-between px-6 py-3 hover:bg-green-50 transition group border-b border-gray-50 last:border-0"
                   >
@@ -214,7 +202,6 @@ const ProjectDetail = () => {
                   </a>
               ))}
 
-              {/* Empty State */}
               {(!project.assets.notebooks?.length && 
                 !project.assets.pdfs?.length && 
                 !project.assets.images?.length && 
@@ -227,7 +214,6 @@ const ProjectDetail = () => {
           </div>
       </div>
 
-      {/* MODAL ORCHESTRATOR */}
       {selectedFile && (
           <FilePreviewModal 
               initialFile={selectedFile} 
