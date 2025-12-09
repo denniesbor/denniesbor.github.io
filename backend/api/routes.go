@@ -32,8 +32,12 @@ func SetupRoutes() *mux.Router {
 	api.HandleFunc("/spw/economics/{id}", GetEconomicImpactByScenario).Methods("GET")
 
 	// Static file serving
-	r.PathPrefix("/projects/").Handler(http.StripPrefix("/projects/", http.FileServer(http.Dir("../projects"))))
-	r.PathPrefix("/thoughts/").Handler(http.StripPrefix("/thoughts/", http.FileServer(http.Dir("../thoughts"))))
+	r.PathPrefix("/api/projects/").Handler(
+        http.StripPrefix("/api/projects/", http.FileServer(http.Dir("../projects"))),
+    )
+	r.PathPrefix("/api/thoughts/").Handler(
+        http.StripPrefix("/api/thoughts/", http.FileServer(http.Dir("../thoughts"))),
+    )
 
 	return r
 }
