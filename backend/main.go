@@ -79,7 +79,7 @@ func main() {
         log.Fatal("Failed to scan thoughts:", err)
     }
 
-    spwDataDir := filepath.Join(projectsDir, "power-grid-data")
+    spwDataDir := filepath.Join(projectsDir, "data", "power-grid-data")
     log.Printf("Loading space weather data from: %s", spwDataDir)
     if err := api.LoadSpaceWeatherData(spwDataDir); err != nil {
         log.Printf("Warning: Failed to load space weather data: %v", err)

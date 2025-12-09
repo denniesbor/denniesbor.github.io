@@ -33,7 +33,7 @@ const getStaticBase = () => {
   }
   
   // Local development - files served via Go backend
-  return 'http://localhost:8080';
+  return 'http://localhost:8080/api';
 };
 
 export const API_BASE = getAPIBase();

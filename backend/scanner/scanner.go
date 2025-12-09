@@ -12,6 +12,7 @@ import (
 // Folders to ignore when scanning projects
 var ignoredFolders = map[string]bool{
 	"power-grid-data": true,
+	"presentations":   true,
 	"data":            true,
 	".git":            true,
 	"node_modules":    true,

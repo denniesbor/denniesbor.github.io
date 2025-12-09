@@ -34,15 +34,34 @@ const Presentations = () => {
             className="bg-white rounded-xl shadow-2xl w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
+            {/* Modal Header */}
             <div className="flex justify-between items-center px-4 py-3 border-b bg-gray-50">
-              <h3 className="text-lg font-bold truncate text-gray-800">{selectedPdf.title}</h3>
-              <button 
-                onClick={() => setSelectedPdf(null)} 
-                className="text-gray-400 hover:text-red-500 text-2xl leading-none px-2"
-              >
-                &times;
-              </button>
+              <div className="flex items-center overflow-hidden">
+                <i className="fas fa-file-pdf mr-3 text-lg text-red-500"></i>
+                <h3 className="text-lg font-bold truncate text-gray-800">{selectedPdf.title}</h3>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                {/* Download Button */}
+                <a 
+                  href={selectedPdf.link} 
+                  download
+                  className="flex items-center text-gray-600 hover:text-blue-600 px-3 py-1 border rounded text-sm transition hover:bg-white bg-gray-50"
+                >
+                    <i className="fas fa-download mr-2"></i> Download
+                </a>
+
+                {/* Close Button */}
+                <button 
+                  onClick={() => setSelectedPdf(null)} 
+                  className="text-gray-400 hover:text-red-500 text-3xl leading-none px-2 ml-2"
+                >
+                  &times;
+                </button>
+              </div>
             </div>
+
+            {/* Viewer Content */}
             <div className="flex-1 overflow-hidden bg-gray-100 relative">
               <PdfViewer url={selectedPdf.link} />
             </div>
