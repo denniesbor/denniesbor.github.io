@@ -1,15 +1,19 @@
 const getAPIBase = () => {
-  // Check if we're on GitHub Pages
-  if (window.location.hostname === 'denniesbor.github.io') {
+  const hostname = window.location.hostname;
+  
+  // GitHub Pages with custom domain
+  if (hostname === 'denniesbor.me' || 
+      hostname === 'www.denniesbor.me' ||
+      hostname === 'denniesbor.github.io') {
     return 'https://denniesbor.com/portfolio';
   }
   
-  // Production (denniesbor.com)
+  // Production (AWS)
   if (import.meta.env.PROD) {
     return '/portfolio';
   }
   
-  // Local development
+  // Local dev
   return 'http://localhost:8080/api';
 };
 

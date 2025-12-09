@@ -41,6 +41,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./denniesbor.com/dist
+          cname: denniesbor.me
 
       - name: Upload Build Artifact
         uses: actions/upload-artifact@v4
