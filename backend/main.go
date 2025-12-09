@@ -1,13 +1,30 @@
 package main
 
 import (
-    "log"
-    "net/http"
-    "os"
-    "path/filepath"
+	"log"
+	"net/http"
+	"os"
+	"path/filepath"
 
-    "denniesbor.com/api"
+	"denniesbor.com/api"
 )
+
+// CORS Middleware
+func corsMiddleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Access-Control-Allow-Origin", "*")
+        w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
+        w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")
+
+        // Handle preflight requests
+        if r.Method == "OPTIONS" {
+            w.WriteHeader(http.StatusOK)
+            return
+        }
+
+        next.ServeHTTP(w, r)
+    })
+}
 
 func getProjectsPath() string {
     // Try NFS mount first (primary - fast)
@@ -48,14 +65,12 @@ func getThoughtsPath() string {
 func main() {
     log.Println("Starting Portfolio Backend Server...")
 
-    // 1. Determine Paths
     projectsDir := getProjectsPath()
     log.Printf("Projects directory: %s", projectsDir)
     
     thoughtsDir := getThoughtsPath()
     log.Printf("Thoughts directory: %s", thoughtsDir)
 
-    // 2. Initialize Data Scanners
     if err := api.InitProjects(projectsDir); err != nil {
         log.Fatal("Failed to scan projects:", err)
     }
@@ -64,15 +79,16 @@ func main() {
         log.Fatal("Failed to scan thoughts:", err)
     }
 
-    // Space weather data is now inside projects/power-grid-data
-    spwDataDir := filepath.Join(projectsDir, "data", "power-grid-data")
+    spwDataDir := filepath.Join(projectsDir, "power-grid-data")
     log.Printf("Loading space weather data from: %s", spwDataDir)
     if err := api.LoadSpaceWeatherData(spwDataDir); err != nil {
         log.Printf("Warning: Failed to load space weather data: %v", err)
     }
 
-    // 3. Setup Routes (Passing the correct paths)
     router := api.SetupRoutes(projectsDir, thoughtsDir)
+
+    // Wrap router with CORS middleware
+    handler := corsMiddleware(router)
 
     port := os.Getenv("PORT")
     if port == "" {
@@ -80,5 +96,5 @@ func main() {
     }
 
     log.Printf("Server running on http://localhost:%s", port)
-    log.Fatal(http.ListenAndServe(":"+port, router))
+    log.Fatal(http.ListenAndServe(":"+port, handler))
 }

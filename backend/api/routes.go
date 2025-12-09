@@ -1,11 +1,11 @@
 package api
 
 import (
-    "net/http"
-    "github.com/gorilla/mux"
+	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
-// Update signature to accept the dynamic paths
 func SetupRoutes(projectsDir, thoughtsDir string) *mux.Router {
     r := mux.NewRouter()
     r.Use(corsMiddleware)
@@ -31,14 +31,15 @@ func SetupRoutes(projectsDir, thoughtsDir string) *mux.Router {
     api.HandleFunc("/spw/vulnerability/{id}", GetGICVulnerabilityByScenario).Methods("GET")
     api.HandleFunc("/spw/economics/{id}", GetEconomicImpactByScenario).Methods("GET")
 
-    // Static file serving
-    // Uses the 'projectsDir' and 'thoughtsDir' passed from main.go
-    r.PathPrefix("/api/projects/").Handler(
-        http.StripPrefix("/api/projects/", http.FileServer(http.Dir(projectsDir))),
-    )
-    r.PathPrefix("/api/thoughts/").Handler(
-        http.StripPrefix("/api/thoughts/", http.FileServer(http.Dir(thoughtsDir))),
-    )
+    // Static file serving (for local development only)
+    // Serve at root level (not under /api)
+    r.PathPrefix("/projects/").Handler(
+        http.StripPrefix("/projects/", http.FileServer(http.Dir(projectsDir))),
+    ).Methods("GET")
+    
+    r.PathPrefix("/thoughts/").Handler(
+        http.StripPrefix("/thoughts/", http.FileServer(http.Dir(thoughtsDir))),
+    ).Methods("GET")
 
     return r
 }

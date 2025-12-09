@@ -1,23 +1,43 @@
 const getAPIBase = () => {
   const hostname = window.location.hostname;
   
-  // GitHub Pages with custom domain
+  // GitHub Pages (denniesbor.me or denniesbor.github.io)
   if (hostname === 'denniesbor.me' || 
-      hostname === 'www.denniesbor.me' ||
+      hostname === 'www.denniesbor.me' || 
       hostname === 'denniesbor.github.io') {
     return 'https://denniesbor.com/portfolio';
   }
   
-  // Production (AWS)
+  // Production (denniesbor.com)
   if (import.meta.env.PROD) {
     return '/portfolio';
   }
   
-  // Local dev
+  // Local development
   return 'http://localhost:8080/api';
 };
 
+const getStaticBase = () => {
+  const hostname = window.location.hostname;
+  
+  // GitHub Pages - files served from denniesbor.com via Nginx
+  if (hostname === 'denniesbor.me' || 
+      hostname === 'www.denniesbor.me' || 
+      hostname === 'denniesbor.github.io') {
+    return 'https://denniesbor.com';
+  }
+  
+  // Production AWS - files served via Nginx (same domain)
+  if (import.meta.env.PROD) {
+    return '';
+  }
+  
+  // Local development - files served via Go backend
+  return 'http://localhost:8080';
+};
+
 export const API_BASE = getAPIBase();
+export const STATIC_BASE = getStaticBase();
 
 export const api = {
   // Projects
@@ -31,12 +51,12 @@ export const api = {
   getThoughts: () => 
     fetch(`${API_BASE}/thoughts`).then(r => r.json()),
   
-  getThought: (category, slug) => 
-    fetch(`${API_BASE}/thoughts/${category}/${slug}`).then(r => r.json()),
+  getThought: (cat, slug) => 
+    fetch(`${API_BASE}/thoughts/${cat}/${slug}`).then(r => r.json()),
   
-  getThoughtContent: (category, slug) => 
-    fetch(`${API_BASE}/thoughts/${category}/${slug}/content`).then(r => r.text()),
-
+  getThoughtContent: (cat, slug) => 
+    fetch(`${API_BASE}/thoughts/${cat}/${slug}/content`).then(r => r.text()),
+  
   // Space Weather Power Grid
   getSpaceWeatherSummary: () =>
     fetch(`${API_BASE}/spw/summary`).then(r => r.json()),
@@ -56,9 +76,9 @@ export const api = {
   getSpaceWeatherScenario: (id) =>
     fetch(`${API_BASE}/spw/scenarios/${id}`).then(r => r.json()),
 
-  getGICVulnerability: (scenarioId) =>
-    fetch(`${API_BASE}/spw/vulnerability/${scenarioId}`).then(r => r.json()),
+  getGICVulnerability: (id) =>
+    fetch(`${API_BASE}/spw/vulnerability/${id}`).then(r => r.json()),
 
-  getEconomicImpact: (scenarioId) =>
-    fetch(`${API_BASE}/spw/economics/${scenarioId}`).then(r => r.json()),
+  getEconomicImpact: (id) =>
+    fetch(`${API_BASE}/spw/economics/${id}`).then(r => r.json()),
 };

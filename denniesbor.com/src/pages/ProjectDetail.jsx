@@ -3,7 +3,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import Loading from "../components/common/Loading";
 import FilePreviewModal from "../components/FilePreviewModal";
-import { api, API_BASE } from "../api/portfolio";
+import { api, STATIC_BASE } from "../api/portfolio";
 
 const ProjectDetail = () => {
   const { id } = useParams();
@@ -13,11 +13,9 @@ const ProjectDetail = () => {
   const [project, setProject] = useState(null);
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(true);
-  
   const [selectedFile, setSelectedFile] = useState(null);
 
-  // 2. DEFINE DYNAMIC BASE URL
-  const PROJECT_ASSETS_URL = `${API_BASE}/projects`;
+  const FILES_URL = `${STATIC_BASE}/projects`;
 
   useEffect(() => {
     let isMounted = true;
@@ -30,8 +28,7 @@ const ProjectDetail = () => {
           setProject(data);
           
           try {
-            // 3. Use the dynamic URL
-            const resp = await fetch(`${PROJECT_ASSETS_URL}/${data.path}/description.md`);
+            const resp = await fetch(`${FILES_URL}/${data.path}/description.md`);
             if (resp.ok) {
               const text = await resp.text();
               if (isMounted) setDescription(text);
@@ -50,13 +47,12 @@ const ProjectDetail = () => {
     fetchData();
 
     return () => { isMounted = false; };
-  }, [id, PROJECT_ASSETS_URL]); // Added dependency
+  }, [id, FILES_URL]);
 
   const allFiles = useMemo(() => {
     if (!project) return [];
     const files = [];
-    // 4. Use the dynamic URL
-    const base = `${PROJECT_ASSETS_URL}/${project.path}`;
+    const base = `${FILES_URL}/${project.path}`;
 
     const addFiles = (list, type, icon) => {
         list?.forEach(f => files.push({ name: f, url: `${base}/${f}`, type, icon }));
@@ -67,11 +63,10 @@ const ProjectDetail = () => {
     addFiles(project.assets.pdfs, 'pdf', 'fa-file-pdf');
 
     return files;
-  }, [project, PROJECT_ASSETS_URL]);
+  }, [project, FILES_URL]);
 
   const handleFileClick = (filename, type, icon) => {
-    // 5. Use the dynamic URL
-    const url = `${PROJECT_ASSETS_URL}/${project.path}/${filename}`;
+    const url = `${FILES_URL}/${project.path}/${filename}`;
     setSelectedFile({ name: filename, url, type, icon });
   };
 
@@ -117,6 +112,7 @@ const ProjectDetail = () => {
 
   return (
     <div className="mt-8 mb-20 max-w-5xl mx-auto px-4 sm:px-6">
+      
       <div className="mb-6">
         <button 
           onClick={handleBack} 
@@ -147,6 +143,7 @@ const ProjectDetail = () => {
           </div>
 
           <div className="flex flex-col">
+              
               {project.assets.notebooks?.map(nb => (
                 <FileRow 
                   key={nb} 
@@ -183,12 +180,10 @@ const ProjectDetail = () => {
                 />
               ))}
 
-              {/* DATA (Direct Download) */}
               {project.assets.data?.map(d => (
                   <a 
                       key={d} 
-                      // 6. Use the dynamic URL here too
-                      href={`${PROJECT_ASSETS_URL}/${project.path}/${d}`}
+                      href={`${FILES_URL}/${project.path}/${d}`}
                       download
                       className="flex items-center justify-between px-6 py-3 hover:bg-green-50 transition group border-b border-gray-50 last:border-0"
                   >
