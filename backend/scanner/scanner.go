@@ -22,9 +22,11 @@ var ignoredFolders = map[string]bool{
 type ProjectMetadata struct {
 	Title           string   `json:"title"`
 	Description     string   `json:"description"`
-	PrimaryCategory string   `json:"primaryCategory"` 
+	PrimaryCategory string   `json:"primaryCategory"`
 	Tags            []string `json:"tags"`
 	Featured        bool     `json:"featured"`
+	Demo            string   `json:"demo"` 
+	GitHub          string   `json:"github"`    
 }
 
 func ScanProjects(projectsDir string) ([]models.Project, error) {
@@ -66,6 +68,8 @@ func ScanProjects(projectsDir string) ([]models.Project, error) {
 			PrimaryCategory: metadata.PrimaryCategory,
 			Tags:            metadata.Tags,
 			Featured:        metadata.Featured,
+			Demo:            metadata.Demo,     
+			GitHub:          metadata.GitHub,    
 			Path:            entry.Name(),
 			Assets:          assets,
 		}
