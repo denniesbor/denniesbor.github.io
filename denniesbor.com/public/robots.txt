@@ -1,0 +1,20 @@
+# robots.txt for denniesbor.me
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://denniesbor.me/sitemap.xml
+
+# Crawl-delay for good practice
+Crawl-delay: 1
+
+# Specific rules
+Disallow: /api/
+Disallow: /*.json$
+
+# Allow important pages
+Allow: /portfolio
+Allow: /presentations
+Allow: /thoughts
+Allow: /space-weather-grid
