@@ -1,23 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import EconomicChart from './EconomicChart';
 
 const EconomicPanel = ({ economics, scenarioLabel }) => {
-  // Data comes in as Millions, so we aggregate here before converting to Billions for display.
-  // We derive the error margin (CI) by comparing the P95 tail to the mean total.
-  const totalImpact = economics ? economics.reduce((acc, curr) => acc + curr.total, 0) : 0;
-  const totalP95 = economics ? economics.reduce((acc, curr) => acc + curr.p95, 0) : 0;
+  const [chartMode, setChartMode] = useState('stacked'); // 'stacked' or 'dodged'
+
+  const totalImpact = economics ? economics.reduce((acc, curr) => acc + Math.abs(curr.total), 0) : 0;
+  const totalP95 = economics ? economics.reduce((acc, curr) => acc + Math.abs(curr.p95 || curr.total), 0) : 0;
   const errorMargin = totalP95 - totalImpact;
   
   const fmt = (n) => (n / 1000).toFixed(1);
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 h-full flex flex-col p-5 overflow-hidden">
-      <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 border-b pb-2">
-        Economic Impact
-      </h3>
+      <div className="flex items-center justify-between mb-4 border-b pb-2 shrink-0">
+        <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest">
+          Economic Impact
+        </h3>
+        
+        {/* Chart Mode Toggle */}
+        <div className="flex gap-2">
+          <button
+            onClick={() => setChartMode('stacked')}
+            className={`px-3 py-1 text-xs rounded transition ${
+              chartMode === 'stacked'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+            }`}
+          >
+            <i className="fas fa-layer-group mr-1"></i>
+            Stacked
+          </button>
+          <button
+            onClick={() => setChartMode('dodged')}
+            className={`px-3 py-1 text-xs rounded transition ${
+              chartMode === 'dodged'
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+            }`}
+          >
+            <i className="fas fa-columns mr-1"></i>
+            Dodged
+          </button>
+        </div>
+      </div>
       
       {/* KPI Card */}
-      <div className="bg-slate-900 text-white rounded-lg p-4 text-center mb-6 shadow-inner shrink-0">
+      <div className="bg-slate-900 text-white rounded-lg p-4 text-center mb-4 shadow-inner shrink-0">
         <div className="text-xs text-slate-400 uppercase tracking-wider mb-1">
             Total Daily Loss
         </div>
@@ -39,10 +67,8 @@ const EconomicPanel = ({ economics, scenarioLabel }) => {
           </div>
       </div>
 
-      {/* min-h-0 is critical here: without it, the flex container won't shrink properly, 
-          breaking the D3 ResizeObserver in the child component. */}
       <div className="flex-1 min-h-0 w-full relative">
-         <EconomicChart data={economics} />
+         <EconomicChart data={economics} mode={chartMode} />
       </div>
     </div>
   );
