@@ -83,9 +83,9 @@ const ProjectDetail = () => {
 
   if (!project) {
     return (
-      <div className="mt-20 text-center text-gray-600">
+      <div className="mt-20 text-center text-gray-600 dark:text-gray-400">
         <h1 className="text-2xl font-bold mb-4">Project not found</h1>
-        <button onClick={() => navigate('/portfolio')} className="text-blue-600 hover:underline">
+        <button onClick={() => navigate('/portfolio')} className="text-blue-600 hover:underline dark:text-blue-400">
           ← Back to Portfolio
         </button>
       </div>
@@ -97,14 +97,14 @@ const ProjectDetail = () => {
       onClick={() => handleFileClick(filename, type, iconClass)}
       role="button"
       tabIndex="0"
-      className={`flex items-center justify-between px-6 py-3 hover:${bgClass} cursor-pointer transition group border-b border-gray-50 last:border-0`}
+      className={`flex items-center justify-between px-6 py-3 hover:${bgClass} dark:hover:bg-gray-800 cursor-pointer transition group border-b border-gray-50 dark:border-gray-800 last:border-0`}
       onKeyDown={(e) => e.key === 'Enter' && handleFileClick(filename, type, iconClass)}
     >
       <div className="flex items-center">
         <i className={`${iconClass} ${colorClass} w-8 text-lg group-hover:scale-110 transition-transform`}></i>
-        <span className="font-mono text-sm text-gray-700">{filename}</span>
+        <span className="font-mono text-sm text-gray-700 dark:text-gray-300">{filename}</span>
       </div>
-      <span className={`text-xs ${colorClass} bg-white border border-gray-200 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-sm`}>
+      <span className={`text-xs ${colorClass} bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-sm`}>
         {label}
       </span>
     </div>
@@ -113,21 +113,82 @@ const ProjectDetail = () => {
   return (
     <div className="mt-8 mb-20 max-w-5xl mx-auto px-4 sm:px-6">
       
+      {/* Back Button */}
       <div className="mb-6">
         <button 
           onClick={handleBack} 
-          className="text-gray-500 hover:text-blue-600 transition-colors flex items-center bg-transparent border-none cursor-pointer p-0 text-sm font-medium"
+          className="text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors flex items-center bg-transparent border-none cursor-pointer p-0 text-sm font-medium"
         >
           <i className="fas fa-arrow-left mr-2"></i> Back to Portfolio
         </button>
       </div>
 
-      <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm mb-8 border border-gray-200">
-          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 border-b border-gray-100 pb-4">
+      {/* Main Content Card */}
+      <div className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-xl shadow-sm mb-8 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
+          <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">
               {project.title}
           </h1>
           
-          <div className="prose prose-slate prose-headings:font-bold prose-a:text-blue-600 max-w-none text-gray-600">
+          {/* Demo/GitHub Links */}
+          {(project.demo || project.github) && (
+            <div className="flex flex-wrap gap-3 mb-6">
+              {project.demo && (
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                >
+                  <i className="fas fa-external-link-alt mr-2"></i>
+                  Open Full Demo
+                </a>
+              )}
+              {project.github && (
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-gray-900 dark:bg-gray-800 text-white rounded-lg hover:bg-gray-800 dark:hover:bg-gray-700 transition-colors text-sm font-medium"
+                >
+                  <i className="fab fa-github mr-2"></i>
+                  View Source
+                </a>
+              )}
+            </div>
+          )}
+
+          {/* Embedded Demo Preview */}
+          {project.demo && (
+            <div className="mb-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-800 shadow-sm">
+              <div className="bg-gray-900 dark:bg-black px-4 py-2 flex items-center justify-between">
+                <span className="text-xs font-mono text-gray-300">
+                  <i className="fas fa-desktop mr-2"></i>
+                  Live Preview
+                </span>
+                <a
+                  href={project.demo}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-gray-400 hover:text-white transition text-xs flex items-center"
+                  title="Open in new tab"
+                >
+                  <i className="fas fa-expand-alt mr-1"></i>
+                  Fullscreen
+                </a>
+              </div>
+              <iframe
+                src={project.demo}
+                className="w-full h-[400px] bg-white"
+                title={`${project.title} Demo`}
+                allow="accelerometer; gyroscope; fullscreen"
+                loading="lazy"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+              />
+            </div>
+          )}
+          
+          {/* Description (Markdown) */}
+          <div className="prose prose-slate dark:prose-invert prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 max-w-none text-gray-600 dark:text-gray-300">
             {description ? (
                 <ReactMarkdown>{description}</ReactMarkdown>
             ) : (
@@ -136,14 +197,16 @@ const ProjectDetail = () => {
           </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 mb-12 overflow-hidden">
-          <div className="bg-gray-50 px-6 py-4 border-b border-gray-200 flex items-center">
+      {/* File Browser Card */}
+      <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 mb-12 overflow-hidden transition-colors duration-200">
+          <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center">
               <i className="fas fa-folder-open text-yellow-600 mr-3 text-lg"></i>
-              <span className="font-bold text-gray-700">Project Files</span>
+              <span className="font-bold text-gray-700 dark:text-gray-200">Project Files</span>
           </div>
 
           <div className="flex flex-col">
               
+              {/* NOTEBOOKS */}
               {project.assets.notebooks?.map(nb => (
                 <FileRow 
                   key={nb} 
@@ -156,6 +219,7 @@ const ProjectDetail = () => {
                 />
               ))}
 
+              {/* PDFS */}
               {project.assets.pdfs?.map(pdf => (
                 <FileRow 
                   key={pdf} 
@@ -168,6 +232,7 @@ const ProjectDetail = () => {
                 />
               ))}
 
+              {/* IMAGES */}
               {project.assets.images?.map(img => (
                 <FileRow 
                   key={img} 
@@ -180,28 +245,30 @@ const ProjectDetail = () => {
                 />
               ))}
 
+              {/* DATA (Direct Download) */}
               {project.assets.data?.map(d => (
                   <a 
                       key={d} 
                       href={`${FILES_URL}/${project.path}/${d}`}
                       download
-                      className="flex items-center justify-between px-6 py-3 hover:bg-green-50 transition group border-b border-gray-50 last:border-0"
+                      className="flex items-center justify-between px-6 py-3 hover:bg-green-50 dark:hover:bg-gray-800 transition group border-b border-gray-50 dark:border-gray-800 last:border-0"
                   >
                       <div className="flex items-center">
                           <i className="fas fa-database text-green-600 w-8 text-lg group-hover:scale-110 transition-transform"></i>
-                          <span className="font-mono text-sm text-gray-700">{d}</span>
+                          <span className="font-mono text-sm text-gray-700 dark:text-gray-300">{d}</span>
                       </div>
-                      <span className="text-xs text-green-700 bg-white border border-green-200 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
+                      <span className="text-xs text-green-700 dark:text-green-400 bg-white dark:bg-gray-900 border border-green-200 dark:border-green-800 px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
                           Download Data
                       </span>
                   </a>
               ))}
 
+              {/* Empty State */}
               {(!project.assets.notebooks?.length && 
                 !project.assets.pdfs?.length && 
                 !project.assets.images?.length && 
                 !project.assets.data?.length) && (
-                  <div className="p-8 text-center text-gray-400 italic bg-gray-50/50">
+                  <div className="p-8 text-center text-gray-400 dark:text-gray-500 italic bg-gray-50/50 dark:bg-gray-800/50">
                       <i className="fas fa-box-open text-2xl mb-2 block opacity-30"></i>
                       No files available for this project.
                   </div>
@@ -209,6 +276,7 @@ const ProjectDetail = () => {
           </div>
       </div>
 
+      {/* Modal Viewer */}
       {selectedFile && (
           <FilePreviewModal 
               initialFile={selectedFile} 
