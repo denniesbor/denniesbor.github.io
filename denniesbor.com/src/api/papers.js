@@ -11,6 +11,15 @@ const papers = [
     resultsType: "internal"
   },
   {
+    title: "Evaluation of Geomagnetically Induced Current Prediction Models: Comparing Traditional Transfer Functions and Neural Network Approaches",
+    description: "Comparative analysis of transfer function methods and deep learning models for GIC prediction using TVA data from the May 2024 geomagnetic storm.",
+    status: "Active",
+    role: "Primary Author",
+    featured: false,
+    githubLink: "https://github.com/denniesbor/tfpy",
+    paperLink: "NA"
+  },
+  {
     title: "Space Radiation Risk Assessment for the Global Satellite Fleet",
     description: "A framework linking particle flux and orbital vulnerability to probabilistic economic risk for 12,000+ satellites.",
     status: "Active",
