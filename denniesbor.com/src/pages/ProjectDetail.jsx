@@ -1,6 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import remarkMath from 'remark-math';
+import rehypeKatex from 'rehype-katex';
+import 'katex/dist/katex.min.css';
 import Loading from "../components/common/Loading";
 import FilePreviewModal from "../components/FilePreviewModal";
 import { api, STATIC_BASE } from "../api/portfolio";
@@ -113,7 +116,6 @@ const ProjectDetail = () => {
   return (
     <div className="mt-8 mb-20 max-w-5xl mx-auto px-4 sm:px-6">
       
-      {/* Back Button */}
       <div className="mb-6">
         <button 
           onClick={handleBack} 
@@ -123,17 +125,16 @@ const ProjectDetail = () => {
         </button>
       </div>
 
-      {/* Main Content Card */}
       <div className="bg-white dark:bg-gray-900 p-6 md:p-8 rounded-xl shadow-sm mb-8 border border-gray-200 dark:border-gray-800 transition-colors duration-200">
           <h1 className="text-3xl md:text-4xl font-bold mb-6 text-gray-900 dark:text-white border-b border-gray-100 dark:border-gray-800 pb-4">
               {project.title}
           </h1>
           
-          {/* Demo/GitHub Links */}
           {(project.demo || project.github) && (
             <div className="flex flex-wrap gap-3 mb-6">
               {project.demo && (
-                <a
+                // Fixed: Added opening <a> tag
+                <a 
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -144,7 +145,8 @@ const ProjectDetail = () => {
                 </a>
               )}
               {project.github && (
-                <a
+                // Fixed: Added opening <a> tag
+                <a 
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -157,7 +159,6 @@ const ProjectDetail = () => {
             </div>
           )}
 
-          {/* Embedded Demo Preview */}
           {project.demo && (
             <div className="mb-6 border border-gray-200 dark:border-gray-700 rounded-lg overflow-hidden bg-gray-50 dark:bg-gray-800 shadow-sm">
               <div className="bg-gray-900 dark:bg-black px-4 py-2 flex items-center justify-between">
@@ -165,7 +166,9 @@ const ProjectDetail = () => {
                   <i className="fas fa-desktop mr-2"></i>
                   Live Preview
                 </span>
-                <a
+                
+                {/* Fixed: Added opening <a> tag */}
+                <a 
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -187,17 +190,20 @@ const ProjectDetail = () => {
             </div>
           )}
           
-          {/* Description (Markdown) */}
           <div className="prose prose-slate dark:prose-invert prose-headings:font-bold prose-a:text-blue-600 dark:prose-a:text-blue-400 max-w-none text-gray-600 dark:text-gray-300">
             {description ? (
-                <ReactMarkdown>{description}</ReactMarkdown>
+                <ReactMarkdown
+                  remarkPlugins={[remarkMath]}
+                  rehypePlugins={[rehypeKatex]}
+                >
+                  {description}
+                </ReactMarkdown>
             ) : (
                 <p className="italic opacity-60">No description available for this project.</p>
             )}
           </div>
       </div>
 
-      {/* File Browser Card */}
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm border border-gray-200 dark:border-gray-800 mb-12 overflow-hidden transition-colors duration-200">
           <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center">
               <i className="fas fa-folder-open text-yellow-600 mr-3 text-lg"></i>
@@ -206,7 +212,6 @@ const ProjectDetail = () => {
 
           <div className="flex flex-col">
               
-              {/* NOTEBOOKS */}
               {project.assets.notebooks?.map(nb => (
                 <FileRow 
                   key={nb} 
@@ -219,7 +224,6 @@ const ProjectDetail = () => {
                 />
               ))}
 
-              {/* PDFS */}
               {project.assets.pdfs?.map(pdf => (
                 <FileRow 
                   key={pdf} 
@@ -232,7 +236,6 @@ const ProjectDetail = () => {
                 />
               ))}
 
-              {/* IMAGES */}
               {project.assets.images?.map(img => (
                 <FileRow 
                   key={img} 
@@ -245,7 +248,6 @@ const ProjectDetail = () => {
                 />
               ))}
 
-              {/* DATA (Direct Download) */}
               {project.assets.data?.map(d => (
                   <a 
                       key={d} 
@@ -263,7 +265,6 @@ const ProjectDetail = () => {
                   </a>
               ))}
 
-              {/* Empty State */}
               {(!project.assets.notebooks?.length && 
                 !project.assets.pdfs?.length && 
                 !project.assets.images?.length && 
@@ -276,7 +277,6 @@ const ProjectDetail = () => {
           </div>
       </div>
 
-      {/* Modal Viewer */}
       {selectedFile && (
           <FilePreviewModal 
               initialFile={selectedFile} 

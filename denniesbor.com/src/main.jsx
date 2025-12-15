@@ -15,6 +15,7 @@ import Layout from "./components/common/Layout.jsx";
 import SpaceWeatherGrid from './pages/SpaceWeatherGrid';
 
 import "./index.css";
+import 'katex/dist/katex.min.css';
 
 const router = createBrowserRouter([
   // 1. HOME (Unique Layout with Sidebar)
