@@ -82,6 +82,25 @@ const ProjectDetail = () => {
     }
   };
 
+  // Custom markdown components
+  const MarkdownComponents = {
+    img: ({ node, ...props }) => {
+      const { src, alt } = props;
+      const imageSrc = src.startsWith('http') 
+        ? src 
+        : `${FILES_URL}/${project.path}/${src}`;
+      
+      return (
+        <img 
+          {...props} 
+          src={imageSrc} 
+          alt={alt}
+          className="w-full rounded-lg my-4 border border-gray-200 dark:border-gray-700"
+        />
+      );
+    }
+  };
+
   if (loading) return <Loading />;
 
   if (!project) {
@@ -133,7 +152,6 @@ const ProjectDetail = () => {
           {(project.demo || project.github) && (
             <div className="flex flex-wrap gap-3 mb-6">
               {project.demo && (
-                // Fixed: Added opening <a> tag
                 <a 
                   href={project.demo}
                   target="_blank"
@@ -145,7 +163,6 @@ const ProjectDetail = () => {
                 </a>
               )}
               {project.github && (
-                // Fixed: Added opening <a> tag
                 <a 
                   href={project.github}
                   target="_blank"
@@ -167,7 +184,6 @@ const ProjectDetail = () => {
                   Live Preview
                 </span>
                 
-                {/* Fixed: Added opening <a> tag */}
                 <a 
                   href={project.demo}
                   target="_blank"
@@ -195,6 +211,7 @@ const ProjectDetail = () => {
                 <ReactMarkdown
                   remarkPlugins={[remarkMath]}
                   rehypePlugins={[rehypeKatex]}
+                  components={MarkdownComponents}
                 >
                   {description}
                 </ReactMarkdown>
