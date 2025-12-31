@@ -55,7 +55,7 @@ export const api = {
     fetch(`${API_BASE}/thoughts/${cat}/${slug}`).then(r => r.json()),
   
   getThoughtContent: (cat, slug) => 
-    fetch(`${API_BASE}/thoughts/${cat}/${slug}/content`).then(r => r.text()),
+    fetch(`${STATIC_BASE}/thoughts/${cat}/${slug}/post.md`).then(r => r.text()),
   
   // Space Weather Power Grid
   getSpaceWeatherSummary: () =>
