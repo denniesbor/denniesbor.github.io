@@ -72,6 +72,8 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
               </a>
               .
             </p>
+            <p>Expected PhD graduation: May 2027.</p>
+            <p>Develops and maintains HAPI server software under the supervision of Dr. Robert S. Weigel.</p>
             <p>
               Technical stack: Python scientific computing, React/Go web
               development, AWS deployment, numerical optimization (Pyomo,
@@ -127,7 +129,7 @@ const ProfileSidebar = ({ isOpen, toggleSidebar }) => {
             className="block text-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition font-semibold"
           >
             <i className="fas fa-file-pdf mr-2"></i>
-            View Resume
+            View CV
           </Link>
         </div>
       </div>

@@ -13,6 +13,7 @@ import Presentations from "./pages/Presentations.jsx";
 import ErrorPage from "./components/common/error-page.jsx";
 import Layout from "./components/common/Layout.jsx";
 import SpaceWeatherGrid from './pages/SpaceWeatherGrid';
+import CswimJourney from "./pages/CswimJourney.jsx";
 
 import "./index.css";
 import 'katex/dist/katex.min.css';
@@ -54,6 +55,7 @@ const router = createBrowserRouter([
         path: "/presentations",
         element: <Presentations />,
       },
+      { path: "/portfolio/cswim-journey", element: <CswimJourney /> },
       { path: "/portfolio/space-weather-grid", element: <SpaceWeatherGrid /> }
     ],
   },

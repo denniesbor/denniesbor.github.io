@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../components/common/Loading";
+import ResearchDashboards from "../components/portfolio/ResearchDashboards";
 import { api } from "../api/portfolio";
 import { categoryConfig, getCategoryInfo, getTagColor } from "../api/categories";
 import LivePreviewModal from "../components/viewers/LivePreviewModal"; // Import the Modal
@@ -42,10 +43,11 @@ const Portfolio = () => {
     setActivePreview({ url, title });
   };
 
-  if (loading) return <Loading />;
+  if (loading) return <div className="py-8"><ResearchDashboards /><Loading /></div>;
 
   return (
     <div className="w-full py-8 mb-12">
+      <ResearchDashboards />
       <div className="text-center mb-10">
         <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">Technical Portfolio</h1>
         <p className="text-gray-600 dark:text-gray-400">

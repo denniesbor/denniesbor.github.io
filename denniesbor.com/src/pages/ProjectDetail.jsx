@@ -7,9 +7,11 @@ import 'katex/dist/katex.min.css';
 import Loading from "../components/common/Loading";
 import FilePreviewModal from "../components/FilePreviewModal";
 import { api, STATIC_BASE } from "../api/portfolio";
+import papers from "../api/papers";
 
 const ProjectDetail = () => {
   const { id } = useParams();
+  const manuscript = papers.find((paper) => paper.projectId === id);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -149,6 +151,15 @@ const ProjectDetail = () => {
               {project.title}
           </h1>
           
+          {manuscript && (
+            <aside aria-label="Related manuscript" className="mb-6 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:bg-blue-900/20 dark:border-blue-800">
+              <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">{manuscript.status} · {manuscript.year}</p>
+              <h2 className="mt-1 text-lg font-bold">{manuscript.title}</h2>
+              <p className="mt-2 text-sm">{manuscript.description}</p>
+              <p className="mt-2 text-sm">{manuscript.note} The original derivation notes and project assets follow below.</p>
+            </aside>
+          )}
+
           {(project.demo || project.github) && (
             <div className="flex flex-wrap gap-3 mb-6">
               {project.demo && (

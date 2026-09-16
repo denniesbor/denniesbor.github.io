@@ -1,0 +1,21 @@
+{
+  "source": "/data/archives/nfs/c-swim/blender/renders/journey_v12/journey_v12.mp4",
+  "source_bytes": 111486166,
+  "source_sha256": "2b5d066ee4877eef88da24d4f73ebbe3591e62121be3ac2774da334b3c8b4ed0",
+  "portfolio_asset": "denniesbor.com/public/media/cswim-journey-v12.mp4",
+  "derived_bytes": 16200146,
+  "derived_sha256": "227449bd5069aca9744ae594629a3d0ada71040013a9ebb0feb55c3e471ae9af",
+  "encoding": "ffmpeg -i SOURCE -c:v libx264 -threads 4 -preset medium -crf 28 -maxrate 1800k -bufsize 3600k -pix_fmt yuv420p -movflags +faststart -an OUTPUT",
+  "poster_time_seconds": 20,
+  "duration_seconds": 88.958333,
+  "width": 1280,
+  "height": 720,
+  "frames_per_second": 24,
+  "top_level_mp4_atoms": [
+    "ftyp",
+    "moov",
+    "free",
+    "mdat"
+  ],
+  "original_modified": false
+}

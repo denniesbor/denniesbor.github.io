@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, ScrollRestoration } from "react-router-dom";
 import Navigation from "./components/common/Navigation";
 import Footer from "./components/common/Footer";
 import ResearchHighlights from "./components/portfolio/ResearchHighlights";
+import ResearchDashboards from "./components/portfolio/ResearchDashboards";
 import ProfileSidebar from "./components/portfolio/ProfileSidebar";
 import { api } from "./api/portfolio";
 import { categoryConfig, getCategoryInfo, getTagColor } from "./api/categories";
@@ -31,6 +32,7 @@ function Home() {
 
   return (
     <div className="flex flex-col items-center min-h-screen bg-page-background">
+      <ScrollRestoration />
       <div className="w-full max-w-8xl px-4 md:px-4">
         <Navigation toggleSidebar={toggleSidebar} />
         
@@ -40,7 +42,8 @@ function Home() {
             toggleSidebar={toggleSidebar}
           />
           
-          <div className="flex-1 py-8">
+          <div className="flex-1 min-w-0 py-8">
+            <ResearchDashboards />
             <ResearchHighlights />
           </div>
 
