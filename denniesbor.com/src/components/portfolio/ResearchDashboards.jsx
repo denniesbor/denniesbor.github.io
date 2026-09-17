@@ -27,7 +27,10 @@ const ResearchDashboards = () => (
           <p className="text-sm font-semibold text-blue-800 dark:text-blue-300">Start with the story · 89-second film</p>
           <h3 id="research-film-title" className="mt-2 text-2xl font-bold leading-tight text-gray-900 dark:text-white">{film.title}</h3>
           <p className="my-4 text-sm leading-relaxed text-gray-700 dark:text-gray-300">{film.description}</p>
-          <Link to={film.url} className="font-semibold text-blue-800 underline decoration-blue-300 underline-offset-4 hover:decoration-blue-800 dark:text-blue-300">{film.action}<span aria-hidden="true"> →</span></Link>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-3">
+            <Link to={film.url} className="font-semibold text-blue-800 underline decoration-blue-300 underline-offset-4 hover:decoration-blue-800 dark:text-blue-300">{film.action}<span aria-hidden="true"> →</span></Link>
+            <a href={film.coverageUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-800 underline underline-offset-4 hover:decoration-blue-800 dark:text-blue-300">{film.coverageLabel}<span aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+          </div>
         </div>
       </div>
     </article>

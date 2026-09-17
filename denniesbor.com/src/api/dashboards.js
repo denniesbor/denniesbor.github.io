@@ -66,7 +66,9 @@ const dashboards = [
     "action": "Watch the 89-second film",
     "url": "/portfolio/cswim-journey",
     "internal": true,
-    "poster": "/media/cswim-journey-v12.jpg"
+    "poster": "/media/cswim-journey-v12.jpg",
+    "coverageUrl": "https://www.cnn.com/interactive/2026/07/weather/solar-storms-power-grid/",
+    "coverageLabel": "Read CNN’s coverage of the research"
   }
 ];
 

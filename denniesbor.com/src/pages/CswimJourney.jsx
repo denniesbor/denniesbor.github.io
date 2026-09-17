@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import dashboards from "../api/dashboards";
 
+const film = dashboards.find((item) => item.kind === "film");
 const videoUrl = "/media/cswim-journey-v12.mp4";
 
 const CswimJourney = () => {
@@ -16,7 +18,10 @@ const CswimJourney = () => {
         Your browser does not support embedded video. <a href={videoUrl}>Download the film</a> to watch it.
       </video>
       {failed && <p role="alert" className="mt-3 text-red-700">The video could not be loaded. Try the direct video link below.</p>}
-      <a href={videoUrl} className="inline-block mt-3 text-blue-700 hover:underline" download="C-SWIM-Journey-12.mp4">Download the film (MP4, 16 MB)</a>
+      <div className="mt-3 flex flex-wrap gap-x-6 gap-y-3">
+        <a href={videoUrl} className="text-blue-700 hover:underline" download="C-SWIM-Journey-12.mp4">Download the film (MP4, 16 MB)</a>
+        <a href={film.coverageUrl} target="_blank" rel="noopener noreferrer" className="text-blue-700 underline underline-offset-4">{film.coverageLabel}<span aria-hidden="true"> ↗</span><span className="sr-only"> (opens in a new tab)</span></a>
+      </div>
       <section id="journey-context" className="mt-8 rounded-lg border border-gray-200 bg-white p-5 dark:bg-gray-900 dark:border-gray-700">
         <h2 className="text-xl font-bold mb-3">What the film shows</h2>
         <p className="text-gray-600 dark:text-gray-300">The film moves from solar imagery through the magnetic environment around Earth to electric fields in the ground, a substation, and nearby communities. Historical imagery and field modeling are combined with illustrative mechanisms and compressed transitions.</p>

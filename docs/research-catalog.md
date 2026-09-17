@@ -72,3 +72,9 @@ Use “and” in interface copy. Explain project abbreviations where they are in
 The updated browser checks cover the explained project names, full descriptions, absence of ampersands in the home and portfolio interface text, section navigation, separate project controls, and the project-API failure state. Desktop and mobile screenshots were reviewed. Existing repository-wide lint errors remain at 123 errors and 2 warnings; the new and rewritten modules pass scoped ESLint checks.
 
 The research section now presents all work directly under three headings, without search, a section dropdown, result counts, or empty-filter states. This is a personal portfolio; its small publication list does not need a search interface. Full summaries and the existing publication, ASSIP, and work-in-progress grouping remain. The production build and scoped ESLint check pass after this simplification.
+
+## CNN coverage
+
+The film card on the home and portfolio pages, and the film page below the player, link to [CNN’s coverage of the power-grid research](https://www.cnn.com/interactive/2026/07/weather/solar-storms-power-grid/). The link is labeled “Read CNN’s coverage of the research.” Its URL and label are maintained with the film entry in `src/api/dashboards.js`.
+
+On September 17, 2026, the CNN URL returned HTTP 200 with the title “Here’s where a massive solar storm could take down the US power grid.” [George Mason’s news page](https://www.gmu.edu/news) identifies the September 4 CNN article as coverage of the research coauthored by Edward Oughton and Dennies Bor. The link describes coverage of the study; the Blender film retains its own description and provenance.
