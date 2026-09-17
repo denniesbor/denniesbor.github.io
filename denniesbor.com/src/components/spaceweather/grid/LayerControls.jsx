@@ -49,7 +49,7 @@ const LayerControls = ({ layers, toggleLayer, activeScenario }) => {
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300"
               />
               <span className={`text-sm ${layers.substations ? 'font-bold text-green-700' : 'text-gray-600'}`}>
-                  Substations & Risk
+                  Substations and risk
               </span>
           </label>
 
@@ -63,7 +63,7 @@ const LayerControls = ({ layers, toggleLayer, activeScenario }) => {
                   className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300"
               />
               <span className={`text-sm ${layers.magnetometers ? 'font-bold text-purple-700' : 'text-gray-600'}`}>
-                  Magnetometers & Fields
+                  Magnetometers and fields
               </span>
           </label>
       </div>

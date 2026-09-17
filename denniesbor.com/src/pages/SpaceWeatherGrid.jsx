@@ -115,10 +115,10 @@ const SpaceWeatherGrid = () => {
                 <div className="mb-2 text-left border-b pb-2">
                     <h1 className="text-xl md:text-2xl font-bold text-gray-800 flex items-center">
                         <i className="fas fa-bolt text-yellow-500 mr-2"></i>
-                        Power Grid Resilience Monitor
+                        Solar storms and the US power grid
                     </h1>
-                    <p className="text-xs text-gray-500 mt-1 ml-8">
-                       Geomagnetically Induced Current (GIC) Simulation & Economic Impact Analysis
+                    <p className="max-w-4xl text-sm leading-relaxed text-gray-600 mt-2 ml-8">
+                       The Coupled Space Weather Impact Model (C-SWIM) studies how solar storms can drive unwanted currents through power lines, affect equipment, and cause economic losses.
                     </p>
                 </div>
 
